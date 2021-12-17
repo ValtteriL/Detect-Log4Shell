@@ -6,8 +6,8 @@
 
     .DESCRIPTION
     Recursively checks all files in given paths and checks if ${jndi:ldap: is found in a line
-    To detect even obfuscated attacks, we are looking for: '${jndi:ldap:' with any characters in-between and without case sensitivity
-
+    To detect even obfuscated attacks, we are using special regex from https://github.com/back2root/log4shell-rex
+    
     .PARAMETER Paths
     Paths to start recursively scanning for files
     WARNING: By default the path is C:\ - This will take a very long time
