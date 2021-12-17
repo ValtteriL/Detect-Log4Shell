@@ -9,7 +9,7 @@ Now using more advanced regex from [https://github.com/back2root/log4shell-rex](
 
 # Usage
 
-# Run
+## Run
 **Warning**: will use C:\ as the default path. It will take a very long time to scan it all through!
 ```
 PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs, path-to-second-log-file-or-directory-with-logs
