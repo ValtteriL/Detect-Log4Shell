@@ -32,7 +32,7 @@ param(
     [String[]] $Paths = 'C:\'
 )
 
-Write-Host "[.] Searching for exploitation attempts recursively from $Paths"
+Write-Output "[.] Searching for exploitation attempts recursively from $Paths"
 
 # string we are looking for: '${jndi:ldap:' with any characters in-between and without case sensitivity
 #$matchRegex = '.*\$.*\{.*j.*n.*d.*i.*\:.*l.*d.*a.*p.*\:.*'
@@ -40,11 +40,11 @@ $matchRegex = '(?:\$|%(?:25)*24|\\(?:0024|0{0,2}44))(?:{|%(?:25)*7[Bb]|\\(?:007[
 
 # Check all files in paths for the regex
 foreach ($path in $Paths) {
-    Write-Host "[.] Checking items in $path"
+    Write-Output "[.] Checking items in $path"
     Get-ChildItem $path -File -Recurse | ForEach-Object {
-        Write-Host "[.] Checking $($_.FullName)"
+        Write-Output "[.] Checking $($_.FullName)"
         Get-Content $_.FullName | Select-String -Pattern $matchRegex -AllMatches | ForEach-Object {
-            Write-Host "[!!] Log4J exploitation attempt found on line $($_.LineNumber): $($_)"
+            Write-Output "[!!] Log4J exploitation attempt found on line $($_.LineNumber): $($_)"
         }
     }
 }
