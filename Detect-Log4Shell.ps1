@@ -18,11 +18,11 @@
     [.] Checking items in .\test\
     [.] Checking C:\Users\valtteri\test\dsadsadsa.txt
     [.] Checking C:\Users\valtteri\test\obfu.txt
-    [!!] Log4J exploitation attempt found in following file: C:\Users\valtteri\test\obfu.txt
+    [!!] Log4J exploitation attempt found on line 7: ${jndi:dns://addr}
     [.] Checking C:\Users\valtteri\teeest\obfu2.txt
-    [!!] Log4J exploitation attempt found in following file: C:\Users\valtteri\test\obfu2.txt
+    [!!] Log4J exploitation attempt found on line 28: ${${eh:wDUdos:jKY:-j}${xksV:Xgi:-n}<snip>${FMRAKM:-b}${wiu:vKIVuh:-j}}
     [.] Checking C:\Users\valtteri\teeest\obfu3.txt
-    [!!] Log4J exploitation attempt found in following file: C:\Users\valtteri\test\obfu3.txt
+    [!!] Log4J exploitation attempt found on line 24: ${jndi:ld${ozI:Kgh:Qn:TXM:-a}<snip>ob${E:yJDsbq:-j}}
     [.] Checking items in .\test2\
 
 #>
@@ -43,8 +43,8 @@ foreach ($path in $Paths) {
     Write-Host "[.] Checking items in $path"
     Get-ChildItem $path -File -Recurse | ForEach-Object {
         Write-Host "[.] Checking $($_.FullName)"
-        if (Get-Content $_.FullName -ReadCount 2000 -Raw | Select-String -Pattern $matchRegex -Quiet) {
-            Write-Host "[!!] Log4J exploitation attempt found in following file: $($_.FullName)"
+        Get-Content $_.FullName | Select-String -Pattern $matchRegex -AllMatches | ForEach-Object {
+            Write-Host "[!!] Log4J exploitation attempt found on line $($_.LineNumber): $($_)"
         }
     }
 }
