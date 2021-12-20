@@ -12,7 +12,9 @@ Now using more advanced regex from [https://github.com/back2root/log4shell-rex](
 ## Run
 By default will scan through all files under 100MB that have been modified since the Log4J vulnerability was disclosed (9/12/2021)
 
-**Warning**: will use C:\ as the default path. It will take a very long time to scan it all through!
+**Warning**: Will use C:\ as the default path. It will take a very long time to scan it all through!
+
+**Warning 2**: Do not pipe the output to a file in the path being scanned - this will cause a loop. If you do, give the output file an extension that will be ignored, such as ".js".
 
 Scan files under 100MB:
 ```
@@ -22,6 +24,11 @@ PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs
 Scan files regardless of size:
 ```
 PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs -AllSizes
+```
+
+Pipe output to file (**note the filename extension**):
+```
+PS> .\Detect-Log4Shell.ps1 | Tee-Object -FilePath '.\output.txt.js'
 ```
 
 ## Get help
