@@ -8,7 +8,7 @@
     Recursively checks all files in given paths and checks if ${jndi:ldap: is found in a line
     To detect even obfuscated attacks, we are using special regex from https://github.com/back2root/log4shell-rex
 
-    By default will look for files under 100MB that have been modified since the exploit was disclosed (9/12/2021)
+    By default will look for files under 25MB that have been modified since the exploit was disclosed (9/12/2021)
     
     .PARAMETER Paths
     Paths to start recursively scanning for files
@@ -16,7 +16,7 @@
 
     .PARAMETER AllSizes
     Check all files regardless of size
-    By default will only check files under 100MB
+    By default will only check files under 25MB
 
     .EXAMPLE
     PS> .\Detect-Log4Shell -Paths ..\teeest\
@@ -60,7 +60,7 @@ foreach ($path in $Paths) {
     if ($AllSizes) {
         $files = (Get-ChildItem $path -File -Recurse -ErrorAction SilentlyContinue -Exclude $excludeList | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")})
     } else {
-        $files = (Get-ChildItem $path -File -Recurse -ErrorAction SilentlyContinue -Exclude $excludeList | Where-Object {$_.length -lt 100mb} | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")})
+        $files = (Get-ChildItem $path -File -Recurse -ErrorAction SilentlyContinue -Exclude $excludeList | Where-Object {$_.length -lt 25mb} | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")})
     }
 
     Write-Output "[.] Found $($files.Length) files to scan"

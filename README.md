@@ -10,13 +10,13 @@ Now using more advanced regex from [https://github.com/back2root/log4shell-rex](
 # Usage
 
 ## Run
-By default will scan through all files under 100MB that have been modified since the Log4J vulnerability was disclosed (9/12/2021)
+By default will scan through all files under 25MB that have been modified since the Log4J vulnerability was disclosed (9/12/2021)
 
 **Warning**: Will use C:\ as the default path. It will take a very long time to scan it all through!
 
 **Warning 2**: Do not pipe the output to a file in the path being scanned - this will cause a loop. If you do, give the output file an extension that will be ignored, such as ".js".
 
-Scan files under 100MB:
+Scan files under 25MB:
 ```
 PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs
 ```
@@ -52,7 +52,7 @@ DESCRIPTION
     
     To detect even obfuscated attacks, we are using special regex from https://github.com/back2root/log4shell-rex
 
-    By default will look for files under 100MB that have been modified since the exploit was disclosed (9/12/2021)
+    By default will look for files under 25MB that have been modified since the exploit was disclosed (9/12/2021)
 
 
 RELATED LINKS
