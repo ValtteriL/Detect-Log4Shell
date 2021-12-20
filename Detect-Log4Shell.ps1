@@ -28,11 +28,13 @@
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\obfu4.txt:1: ${${upper:j}n${lower:d}${lower:i}:l${lower:d}${lower:a}${lower:p}${lower::}${lower:/}${lower:/}1${lower:2}${lower:7}.0${lower:.}0${lower:.}${lower:1}${lower::}10${lower:9}9${lower:/}o${lower:b}j}
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\obfu5.txt:1: ${jndi:ldap://127.0.0.1:1099/obj}
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\test.txt:3: ${jndi:LDap:dasdasdasdas${jndi:ldap:4214123
+    [.] Found in total 6 Log4J exploitation attempts
 
     .EXAMPLE
     PS> Detect-Log4Shell -Paths .\test\ -AllSizes
     [.] Searching for exploitation attempts recursively from .\test\
     [.] Checking items in .\test\
+    [.] Found in total 0 Log4J exploitation attempts
 
 #>
 
