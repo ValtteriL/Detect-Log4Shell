@@ -65,11 +65,15 @@ foreach ($path in $Paths) {
 
     Write-Output "[.] Found $($files.Length) files to scan"
 
+    $counter = 0
     $files | ForEach-Object {
         $filename = $_.FullName
         Write-Progress -Activity "[.] Checking $($filename)"
         Get-Content -LiteralPath $_.FullName | Select-String -Pattern $matchRegex -AllMatches | ForEach-Object {
+            $counter++
             Write-Output "[!!] Log4J exploitation attempt found in $($filename):$($_.LineNumber): $($_)"
         }
     }
+
+    Write-Output "[.] Found in total $($counter) Log4J exploitation attempts"
 }
