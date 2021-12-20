@@ -16,6 +16,8 @@ By default will scan through all files under 25MB that have been modified since 
 
 **Warning 2**: Do not pipe the output to a file in the path being scanned - this will cause a loop. If you do, give the output file an extension that will be ignored, such as ".js".
 
+Run the script as user that has access to the log files, such as Administrator.
+
 Scan files under 25MB:
 ```
 PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs
