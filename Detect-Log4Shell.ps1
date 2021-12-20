@@ -61,10 +61,12 @@ $matchRegex = '(?:\$|%(?:25)*24|\\(?:0024|0{0,2}44))(?:{|%(?:25)*7[Bb]|\\(?:007[
 foreach ($path in $Paths) {
     Write-Output "[.] Checking items in $path"
     
+    Write-Output "[.] Collecting list of files to scan... This might take a while..."
+
     if ($AllSizes) {
-        $files = Get-ChildItem $path -File -Recurse
+        $files = Get-ChildItem $path -File -Recurse -ErrorAction SilentlyContinue
     } else {
-        $files = (Get-ChildItem $path -File -Recurse | Where-Object {$_.length -lt 100mb})
+        $files = (Get-ChildItem $path -File -Recurse -ErrorAction SilentlyContinue | Where-Object {$_.length -lt 100mb})
     }
 
     $files | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")} | ForEach-Object {
