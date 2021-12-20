@@ -10,9 +10,13 @@ Now using more advanced regex from [https://github.com/back2root/log4shell-rex](
 # Usage
 
 ## Run
+By default will scan through all files under 100MB that have been modified since the Log4J vulnerability was disclosed (9/12/2021)
+
 **Warning**: will use C:\ as the default path. It will take a very long time to scan it all through!
+
 ```
-PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs, path-to-second-log-file-or-directory-with-logs
+PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs
+PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs -AllSizes
 ```
 
 ## Get help
@@ -28,12 +32,15 @@ SYNOPSIS
 
 
 SYNTAX
-    C:\Users\valtteri\Desktop\Detect-Log4Shell.ps1 [[-Paths] <String[]>] [<CommonParameters>]
+    C:\Users\valtteri\Desktop\Detect-Log4Shell.ps1 [[-Paths] <String[]>] [-AllSizes] [<CommonParameters>]
 
 
 DESCRIPTION
-    Recursively checks all files line-by-line in given paths for substring '${jndi:ldap:', among many other indicators of compromise
+    Recursively checks all files in given paths and checks if ${jndi:ldap: is found in a line
+    
     To detect even obfuscated attacks, we are using special regex from https://github.com/back2root/log4shell-rex
+
+    By default will look for files under 100MB that have been modified since the exploit was disclosed (9/12/2021)
 
 
 RELATED LINKS
