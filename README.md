@@ -14,8 +14,13 @@ By default will scan through all files under 100MB that have been modified since
 
 **Warning**: will use C:\ as the default path. It will take a very long time to scan it all through!
 
+Scan files under 100MB:
 ```
 PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs
+```
+
+Scan files regardless of size:
+```
 PS> .\Detect-Log4Shell.ps1 -Paths path-to-log-file-or-directory-with-logs -AllSizes
 ```
 
