@@ -69,6 +69,8 @@ foreach ($path in $Paths) {
         $files = (Get-ChildItem $path -File -Recurse -ErrorAction SilentlyContinue | Where-Object {$_.length -lt 100mb})
     }
 
+    Write-Output "[.] Found $($files.Length) files to scan"
+
     $files | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")} | ForEach-Object {
         $filename = $_.FullName
         Write-Output "[.] Checking $($filename)"
