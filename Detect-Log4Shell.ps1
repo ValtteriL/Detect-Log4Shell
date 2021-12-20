@@ -22,26 +22,17 @@
     PS> .\Detect-Log4Shell -Paths ..\teeest\
     [.] Searching for exploitation attempts recursively from ..\teeest\
     [.] Checking items in ..\teeest\
-    [.] Checking C:\Users\valtteri\teeest\dsadsadsa.txt
-    [.] Checking C:\Users\valtteri\teeest\hello world [testi].txt
-    [.] Checking C:\Users\valtteri\teeest\obfu.txt
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\obfu.txt:1: ${${eh:wDUdos:jKY:-j}${xksV:Xgi:-n}${hNdb:SbmXU:goWgvJ:iqAV:Ux:-d}${MXWN:oOi:c:UxXzcI:-i}${DYKgs:tHlY:-:}${d:FHdMm:fw:-l}${Gw:-d}${LebGxe:c:SxLXa:-a}${echyWc:BE:NBO:s:gVbT:-p}${l:QwCL:gzOQm:gqsDS:-:}${qMztLn:e:E:WS:-/}${NUu:S:afVNbT:kyjbiE:-/}${PtGUfI:WcYh:c:-1}${YoSJ:KUV:uySK:crNTm:-2}${EwkY:EsX:S:wk:-7}${HUWOJ:MMIxOn:S:-.}${MHF:s:-0}${obrJVU:RPw:d:A:-.}${E:RgY:j:-0}${MaOtbM:-.}${O:-1}${zzfuGD:YEyvy:mhp:T:-:}${vlaw:WuOBz:-1}${HAjxt:ziBgmc:-0}${UKVBrk:sNAKe:F:qXNetQ:mdIuOW:-9}${geJs:sgYgQW:oOd:qOGf:aYpAkP:-9}${UonINv:-/}${aTygHK:pbQiTB:KkXhKS:-o}${FMRAKM:-b}${wiu:vKIVuh:-j}}
-    [.] Checking C:\Users\valtteri\teeest\obfu2.txt
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\obfu2.txt:1: ${jndi:ld${ozI:Kgh:Qn:TXM:-a}p:${DBEau:Y:pLXUu:SfRKk:vWu:-/}${x:UMADq:-/}127${lt:tWd:iEVW:pD:tGCr:-.}${jFpSDW:z:SN:AuqM:C:-0}${dxxilc:HTFa:QLgii:pv:-.}0.${a:l:urnrtk:-1}:1099${zlSEqQ:T:qg:o:-/}ob${E:yJDsbq:-j}}
-    [.] Checking C:\Users\valtteri\teeest\obfu3.txt
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\obfu3.txt:1: ${${upper:j}${lower:n}${lower:d}${lower:i}${lower::}${lower:l}${lower:d}${lower:a}${lower:p}${lower::}${lower:/}${lower:/}${lower:1}${lower:2}${lower:7}${lower:.}${lower:0}${lower:.}${lower:0}${lower:.}${lower:1}${lower::}${lower:1}${lower:0}${lower:9}${lower:9}${lower:/}${lower:o}${lower:b}${lower:j}}
-    [.] Checking C:\Users\valtteri\teeest\obfu4.txt
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\obfu4.txt:1: ${${upper:j}n${lower:d}${lower:i}:l${lower:d}${lower:a}${lower:p}${lower::}${lower:/}${lower:/}1${lower:2}${lower:7}.0${lower:.}0${lower:.}${lower:1}${lower::}10${lower:9}9${lower:/}o${lower:b}j}
-    [.] Checking C:\Users\valtteri\teeest\obfu5.txt
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\obfu5.txt:1: ${jndi:ldap://127.0.0.1:1099/obj}
-    [.] Checking C:\Users\valtteri\teeest\test.txt
     [!!] Log4J exploitation attempt found in C:\Users\valtteri\teeest\test.txt:3: ${jndi:LDap:dasdasdasdas${jndi:ldap:4214123
 
     .EXAMPLE
     PS> Detect-Log4Shell -Paths .\test\ -AllSizes
     [.] Searching for exploitation attempts recursively from .\test\
     [.] Checking items in .\test\
-    [.] Checking C:\Users\valtteri\test\dsadsadsa.txt
 
 #>
 
@@ -76,7 +67,7 @@ foreach ($path in $Paths) {
 
     $files | ForEach-Object {
         $filename = $_.FullName
-        Write-Output "[.] Checking $($filename)"
+        Write-Progress -Activity "[.] Checking $($filename)"
         Get-Content -LiteralPath $_.FullName | Select-String -Pattern $matchRegex -AllMatches | ForEach-Object {
             Write-Output "[!!] Log4J exploitation attempt found in $($filename):$($_.LineNumber): $($_)"
         }
