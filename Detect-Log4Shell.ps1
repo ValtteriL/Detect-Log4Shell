@@ -60,21 +60,23 @@ foreach ($path in $Paths) {
     Write-Output "[.] Collecting list of files to scan... This might take a while..."
 
     if ($AllSizes) {
-        $files = (Get-ChildItem $path -File -Recurse -ErrorAction SilentlyContinue -Exclude $excludeList | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")})
+        $files = (Get-ChildItem $path -Recurse -ErrorAction SilentlyContinue -Exclude $excludeList | Where-Object {! $_.PSIsContainer} | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")})
     } else {
-        $files = (Get-ChildItem $path -File -Recurse -ErrorAction SilentlyContinue -Exclude $excludeList | Where-Object {$_.length -lt 25mb} | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")})
+        $files = (Get-ChildItem $path -Recurse -ErrorAction SilentlyContinue -Exclude $excludeList | Where-Object {! $_.PSIsContainer} | Where-Object {$_.length -lt 25mb} | Where-Object {$_.lastwritetime -gt [datetime]::parse("09/12/2021")})
     }
 
     Write-Output "[.] Found $($files.Length) files to scan"
 
     $counter = 0
+    $nfile = 1
     $files | ForEach-Object {
         $filename = $_.FullName
-        Write-Progress -Activity "[.] Checking $($filename)"
+        Write-Progress -Activity "[.] File number $($nfile) out of $($files.Length)" -Status "[.] Checking $($filename)"
         Get-Content -LiteralPath $_.FullName | Select-String -Pattern $matchRegex -AllMatches | ForEach-Object {
             $counter++
             Write-Output "[!!] Log4J exploitation attempt found in $($filename):$($_.LineNumber): $($_)"
         }
+        $nfile++
     }
 
     Write-Output "[.] Found in total $($counter) Log4J exploitation attempts"
